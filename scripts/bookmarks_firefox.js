@@ -56,7 +56,7 @@ const createChildrenElementsMarkdown = (each) => {
 		}
 		return `<details class='child'><summary>${each.name !== "" ? each.name : each.url}</summary>${kids}</details>`
 	} else if (each.type = "url") {
-		return `<a href='${each.url}' target='_blank'>${each.name !== "" ? each.name : each.url}</a>\n`
+		return `<a href='${each.url}' target='_blank'>${each.name !== "" ? each.name : each.url}</a><br/>`
 	}
 }
 

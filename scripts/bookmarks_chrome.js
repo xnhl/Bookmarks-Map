@@ -40,14 +40,13 @@ const createChildrenElements = (each) => {
 	}
 }
 
-const createElements = (data) => `<details open>
-<summary>Bookmark Bar</summary>
-${data.bookmark_bar.children.map((each) => `${createChildrenElements(each)}`).join("")}
-</details>
-<details open>
-<summary>Other Bookmarks</summary>
-${data.other.children.map((each) => `${createChildrenElements(each)}`).join("")}
-</details>`
+const createElements = (data) => {
+	let kids = []
+	if (data.children && Array.isArray(data.children) && data.children.length) {
+		kids = data.children.map(each => createChildrenElements(each)).join("")
+	}
+	return `<details open><summary>${data.name}</summary>${kids}</details>`
+}
 
 const createChildrenElementsMarkdown = (each) => {
 	if (each.type == "folder") {
@@ -55,21 +54,19 @@ const createChildrenElementsMarkdown = (each) => {
 		if (each.children && Array.isArray(each.children) && each.children.length) {
 			kids = each.children.map(each => createChildrenElementsMarkdown(each)).join("")
 		}
-		return `<details class='child'>
-<summary>${each.name !== "" ? each.name : each.url}</summary>${kids}</details>`
+		return `<details class='child'><summary>${each.name !== "" ? each.name : each.url}</summary>${kids}</details>`
 	} else if (each.type = "url") {
-		return `<a href='${each.url}' target='_blank'>${each.name !== "" ? each.name : each.url}</a>\n`
+		return `<a href='${each.url}' target='_blank'>${each.name !== "" ? each.name : each.url}</a><br/>`
 	}
 }
 
-const createElementsMarkdown = (data) => `<details open>
-<summary>Bookmark Bar</summary>
-${data.bookmark_bar.children.map((each) => `${createChildrenElementsMarkdown(each)}`).join("")}
-</details>
-<details open>
-<summary>Other Bookmarks</summary>
-${data.other.children.map((each) => `${createChildrenElementsMarkdown(each)}`).join("")}
-</details>`
+const createElementsMarkdown = (data) => {
+	let kids = []
+	if (data.children && Array.isArray(data.children) && data.children.length) {
+		kids = data.children.map(each => createChildrenElementsMarkdown(each)).join("")
+	}
+	return `<details open><summary>${data.name}</summary>${kids}</details>`
+}
 
 const makeHTML = (html) => `<!DOCTYPE html>
 <html lang='en'>
@@ -85,14 +82,14 @@ ${html}
 </body>
 </html>`
 
-let final_data = {
-	bookmark_bar: mapData(parsed.roots.bookmark_bar),
-	other: mapData(parsed.roots.other),
-	synced: mapData(parsed.roots.synced)
-}
+let final_data = [
+	mapData(parsed.roots.bookmark_bar),
+	mapData(parsed.roots.other),
+	mapData(parsed.roots.synced)
+]
 
-let elements = createElements(final_data)
-let elements_markdown = createElementsMarkdown(final_data)
+let elements = final_data.map(each => createElements(each)).join("")
+let elements_markdown = final_data.map(each => createElementsMarkdown(each)).join("")
 
 writeHTML("../final/chrome/index", makeHTML(elements))
 writeMD("../final/chrome/index", makeHTML(elements_markdown))
