@@ -88,8 +88,7 @@ const makeHTML = (html, type) => {
 		<link rel='stylesheet' href='../assets/bookmarks_styles.css'>
 	</head>
 	<body>
-		${html}
-</body>
+		${html}</body>
 </html>`
 	let m = `<html lang='en'>
 	<head>
@@ -99,8 +98,7 @@ const makeHTML = (html, type) => {
 		<link rel='stylesheet' href='../assets/bookmarks_styles.css'>
 	</head>
 	<body>
-		${html}
-</body>
+		${html}</body>
 </html>`
 	return type == "html" ? h : type == "markdown" ? m : ""
 }

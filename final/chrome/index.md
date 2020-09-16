@@ -399,6 +399,5 @@
 </details>
 <details open><summary>Mobile bookmarks</summary>
 </details>
-
 </body>
 </html>

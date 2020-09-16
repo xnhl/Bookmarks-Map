@@ -322,6 +322,5 @@
 </details>
 <details open><summary>Mobile Bookmarks</summary>
 </details>
-
 </body>
 </html>
