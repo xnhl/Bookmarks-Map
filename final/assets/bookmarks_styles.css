@@ -112,7 +112,7 @@ summary {
 }
 
 details[open] > summary {
-	color: white;
+	color: var(--font_color);
 }
 
 .child {
